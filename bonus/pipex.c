@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 18:16:48 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:38:26 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,12 @@ void	child_command_execution(int *fd, char **argv, char **env)
 		exit_error("\x1b[31mNot valid command\x1b[0m");
 }
 
-int	main(int argc, char **argv, char **env)
+void	initializer(int argc, char **argv, char **env)
 {
-	int	fd[2];
+	int	fd;
 	int	pid;
-
-	if (argc == 5)
-	{
+	
+		fd = (int)malloc (sizeof(int) * argc - 3);
 		if (pipe(fd) == -1)
 			exit_error("\x1b[31mError: Pipe not generated\n\x1b[0m");
 		pid = fork();
@@ -77,6 +76,13 @@ int	main(int argc, char **argv, char **env)
 			waitpid(pid, NULL, 0);
 			parent_command_execution(fd, argv, env);
 		}
+}
+
+int	main(int argc, char **argv, char **env)
+{
+
+	if (argc >= 5)
+	{
 	}
 	else
 	{

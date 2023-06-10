@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 20:04:55 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 20:20:07 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/10 20:19:34 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <sys/wait.h>
-# include "libft.h"
+# include "../libft.h"
 # include <fcntl.h>
 
 void	exit_error(char *message);
