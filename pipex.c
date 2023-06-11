@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 18:16:48 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:18:36 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	main(int argc, char **argv, char **env)
 			child_command_execution(fd, argv, env);
 		else
 		{
-			waitpid(pid, NULL, 0);
+			if (waitpid(pid, NULL, 0) == -1)
+				exit_error("\x1b[31mError: Unable to wait\n\x1b[0m")
 			parent_command_execution(fd, argv, env);
 		}
 	}

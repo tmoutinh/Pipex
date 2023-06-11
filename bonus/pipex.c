@@ -6,21 +6,22 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 20:38:26 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/11 18:04:27 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	parent_command_execution(int *fd, char **argv, char **env)
+void	parent_command_execution(int *fd, char *cmd_passed, char *argv, char **env)
 {
 	char	*path;
 	int		file;
 	char	**cmd;
 
-	cmd = ft_split(argv[3], ' ');
-	path = access_path(argv[3], env, cmd);
-	file = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	cmd = ft_split(cmd_passed, ' ');
+	path = access_path(cmd_passed, env, cmd);
+	printf("%s\n", argv);
+	file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
 		exit_error("\x1b[31mError opening file\x1b[0m");
 	if (path)
@@ -35,14 +36,14 @@ void	parent_command_execution(int *fd, char **argv, char **env)
 		exit_error("\x1b[31mNot valid command\x1b[0m");
 }
 
-void	child_command_execution(int *fd, char **argv, char **env)
+void	child_command_execution(int *fd, char *cmd_passed, char **argv, char **env)
 {
 	char	*path;
 	int		file;
 	char	**cmd;
 
-	cmd = ft_split(argv[2], ' ');
-	path = access_path(argv[2], env, cmd);
+	cmd = ft_split(cmd_passed, ' ');
+	path = access_path(cmd_passed, env, cmd);
 	file = open(argv[1], O_RDONLY, 0777);
 	if (file == -1)
 		exit_error("\x1b[31mError opening file\x1b[0m");
@@ -58,31 +59,54 @@ void	child_command_execution(int *fd, char **argv, char **env)
 		exit_error("\x1b[31mNot valid command\x1b[0m");
 }
 
-void	initializer(int argc, char **argv, char **env)
+void	initializer(int argc, char **argv, char **env, int cmd_number)
 {
-	int	fd;
-	int	pid;
-	
-		fd = (int)malloc (sizeof(int) * argc - 3);
-		if (pipe(fd) == -1)
+	int	fd[cmd_number][2];
+	int	pid[cmd_number - 1];
+	int	i;
+	//fd[0] = STDINPUT
+	//fd[1] = STDOUT
+	i = -1;
+	while (++i < cmd_number)
+	{
+		if (pipe(fd[i]) == -1)
 			exit_error("\x1b[31mError: Pipe not generated\n\x1b[0m");
-		pid = fork();
-		if (pid == -1)
+	}
+	i = -1;
+	while (++i < cmd_number - 1)
+	{
+		pid[i] = fork();
+		if (pid[i] == -1)
 			exit_error("\x1b[31mError: Fork not executed\n\x1b[0m");
-		if (pid == 0)
-			child_command_execution(fd, argv, env);
-		else
+		if (pid[i] == 0) //Child Process
 		{
-			waitpid(pid, NULL, 0);
-			parent_command_execution(fd, argv, env);
+			printf("The cmd being passed to child is = %s\n", argv[2 + i]);
+			child_command_execution(fd[i], argv[2 + i], argv, env);
 		}
+	}
+	//Parent Process
+	i = -1;
+	while (++i < cmd_number - 1)
+	{
+		waitpid(pid[i], NULL, 0);
+	}
+	printf("i = %d\n", i);
+	printf("The cmd being passed to parent is = %s\n", argv[1 + cmd_number]);
+	parent_command_execution(fd[i], argv[1 + cmd_number], argv[argc - 1], env);
 }
 
 int	main(int argc, char **argv, char **env)
 {
+	int	cmd_number;
 
 	if (argc >= 5)
 	{
+		cmd_number = 0;
+		while (cmd_number + 3 < argc)
+			cmd_number++;
+		printf("Number of cmds = %d\n", cmd_number);
+		printf("After cmds = %s\n", argv[cmd_number + 2]);
+		initializer(argc, argv, env, cmd_number);
 	}
 	else
 	{
