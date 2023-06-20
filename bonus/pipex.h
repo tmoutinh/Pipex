@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 20:04:55 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/14 15:00:45 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:07:54 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	path_freer(char **paths);
 char	*get_path(char **env);
 char	*access_path(char *cmd, char **env, char **path_cmd);
 void	parent_command_execution(int *output, char *cmd_passed, char *argv, char **env);
-void	child_command_execution(int *input, int *output, char *cmd_passed, char **argv, char **env, int i);
+void	child_command_execution(int *input, int *output, char *cmd_passed, char **argv, char **env);
 int		main(int argc, char **argv, char **env);
 
 #endif

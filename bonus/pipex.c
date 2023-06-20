@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/19 17:08:24 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:42:45 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	initializer(int argc, char **argv, char **env, int cmd_number)
 					close(fd[j][1]);
 			}
 			printf("The cmd being passed to child is = %s\n", argv[2 + i]);
-			child_command_execution(fd[i], fd[i + 1], argv[2 + i], argv, env, i);
+			child_command_execution(fd[i], fd[i + 1], argv[2 + i], argv, env);
 		}
 	}
 	//Parent Process
@@ -103,8 +103,6 @@ void	here_doc(int argc, char **argv, char **env)
 
 int	main(int argc, char **argv, char **env)
 {
-	int	cmd_number;
-
 	if (ft_strncmp("here_doc", argv[1], ft_strlen("here_doc")) ==0 )
 	{
 		if (argc < 6)
@@ -113,12 +111,9 @@ int	main(int argc, char **argv, char **env)
 	}
 	else if (argc >= 5)
 	{
-		cmd_number = 0;
-		while (cmd_number + 3 < argc)
-			cmd_number++;
-		printf("Number of cmds = %d\n", cmd_number);
-		printf("After cmds = %s\n", argv[cmd_number + 2]);
-		initializer(argc, argv, env, cmd_number);
+		printf("Number of cmds = %d\n", argc - 3);
+		printf("After cmds = %s\n", argv[argc - 3 + 2]);
+		initializer(argc, argv, env, argc - 3);
 	}
 	else
 	{

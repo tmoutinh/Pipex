@@ -6,13 +6,13 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:09:51 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/19 17:05:16 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/20 16:38:50 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	parent_command_execution(int *output, char *cmd_passed, char *argv, char **env)
+void	parent_command_execution(int *input, char *cmd_passed, char *argv, char **env)
 {
 	char	*path;
 	int		file;
@@ -27,7 +27,7 @@ void	parent_command_execution(int *output, char *cmd_passed, char *argv, char **
 		exit_error("\x1b[31mError opening file\x1b[0m");
 	if (path)
 	{
-		dup2(output[0], STDIN_FILENO);
+		dup2(input[0], STDIN_FILENO);
 		dup2(file, STDOUT_FILENO);
 		if (execve(path, cmd, env) == -1)
 			exit_error("\x1b[31mError: Parent not executed\x1b[0m");
@@ -36,7 +36,7 @@ void	parent_command_execution(int *output, char *cmd_passed, char *argv, char **
 		exit_error("\x1b[31mNot valid command\x1b[0m");
 }
 
-void	child_command_execution(int *input, int *output, char *cmd_passed, char **argv, char **env, int i)
+void	child_command_execution(int *input, int *output, char *cmd_passed, char **argv, char **env)
 {
 	char	*path;
 	int		file;
@@ -49,7 +49,8 @@ void	child_command_execution(int *input, int *output, char *cmd_passed, char **a
 		exit_error("\x1b[31mError opening file\x1b[0m");
 	if (path)
 	{
-		if (i == 0)
+		if (ft_strncmp(cmd_passed, argv[2], ft_strlen(cmd_passed)) == 0 
+			&& ft_strncmp("here_doc", argv[1], ft_strlen("here_doc")) != 0)
 		{
 			dup2(file, STDIN_FILENO);
 			dup2(output[1], STDOUT_FILENO);
