@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 20:04:55 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 20:20:07 by tmoutinh         ###   ########.fr       */
+/*   Created: 2023/05/01 15:28:53 by tmoutinh          #+#    #+#             */
+/*   Updated: 2023/05/09 09:46:49 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
+# include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
-# include <sys/wait.h>
-# include "libft.h"
-# include <fcntl.h>
 
-void	exit_error(char *message);
-void	path_freer(char **paths);
-char	*get_path(char **env);
-char	*access_path(char *cmd, char **env, char **path_cmd);
-void	parent_command_execution(int *fd, char **argv, char **env);
-void	child_command_execution(int *fd, char **argv, char **env);
-int		main(int argc, char **argv, char **env);
+char	*get_next_line(int fd);
+char	*get_txt(int fd, char *txt);
+char	*strjoiner(char *s1, char *s2);
+int		sizing(const char *txt);
+char	*find_nl(const char *txt);
+char	*extraction(char *txt);
+char	*removal(char *txt);
 
 #endif

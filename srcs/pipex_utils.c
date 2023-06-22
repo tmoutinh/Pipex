@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:06:25 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 18:08:24 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:09:24 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	path_freer(char **paths)
 
 /*This function will take the env and extract the path and join it 
 with / and the initial portion of the command*/
-char	*access_path(char *cmd, char **env, char **path_cmd)
+char	*access_path(char **env, char **path_cmd)
 {
 	int		i;
 	char	*path;

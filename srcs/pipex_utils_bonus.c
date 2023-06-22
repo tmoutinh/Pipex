@@ -1,16 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   pipex_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:06:25 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/10 18:08:24 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:12:34 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_bonus.h"
+
+void	extra(int fd_0, int fd_1, int pid)
+{
+	close(fd_1);
+	dup2(fd_0, STDIN_FILENO);
+	waitpid(pid, NULL, 0);
+}
 
 void	exit_error(char *message)
 {
@@ -46,7 +53,7 @@ void	path_freer(char **paths)
 
 /*This function will take the env and extract the path and join it 
 with / and the initial portion of the command*/
-char	*access_path(char *cmd, char **env, char **path_cmd)
+char	*access_path(char **env, char **path_cmd)
 {
 	int		i;
 	char	*path;
