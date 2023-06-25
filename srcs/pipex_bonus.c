@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/22 18:11:51 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:42:28 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	initializer(char **argv, int argc, char **env)
 	if (outfile == -1)
 		exit_error("\x1b[31mError opening files\x1b[0m");
 	dup2(outfile, STDOUT_FILENO);
-	executer(argv[first_cmd], env, "\x1b[31mError: Parent not executed\x1b[0m");
+	executer(argv[first_cmd], env,
+		outfile, "\x1b[31mError: Parent not executed\x1b[0m");
 }
 
 int	main(int argc, char **argv, char **env)

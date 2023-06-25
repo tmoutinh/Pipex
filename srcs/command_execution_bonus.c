@@ -6,13 +6,13 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:09:51 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/25 10:55:01 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/25 13:42:46 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	executer(char *cmd_passed, char **env, char *message)
+void	executer(char *cmd_passed, char **env, char *file, char *message)
 {	
 	char	*path;
 	char	**cmd;
@@ -21,6 +21,7 @@ void	executer(char *cmd_passed, char **env, char *message)
 	path = access_path(env, cmd);
 	if (execve(path, cmd, env) == -1)
 	{
+		close(file);
 		path_freer(cmd);
 		free(path);
 		exit_error(message);
@@ -41,7 +42,8 @@ void	child_command_execution(char *cmd_passed, char **env)
 	{
 		close(fd[0]);
 		dup2(fd[1], STDOUT_FILENO);
-		executer(cmd_passed, env, "\x1b[31mError: Child not executed\x1b[0m");
+		executer(cmd_passed, env,
+			fd[1], "\x1b[31mError: Child not executed\x1b[0m");
 	}
 	else
 		extra(fd[0], fd[1], child);
