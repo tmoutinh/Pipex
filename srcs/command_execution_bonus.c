@@ -12,7 +12,7 @@
 
 #include "pipex_bonus.h"
 
-void	executer(char *cmd_passed, char **env, char *file, char *message)
+void	executer(char *cmd_passed, char **env, int file, char *message)
 {	
 	char	*path;
 	char	**cmd;

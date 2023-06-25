@@ -27,7 +27,7 @@ void	parent_command_execution(char *cmd_passed, char **env);
 void	child_command_execution(char *cmd_passed, char **env);
 int		main(int argc, char **argv, char **env);
 void	extra(int fd_0, int fd_1, int pid);
-void	executer(char *cmd_passed, char **env, char *file, char *message);
+void	executer(char *cmd_passed, char **env, int file, char *message);
 void	initializer(char **argv, int argc, char **env);
 
 #endif
