@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:09:51 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/22 18:12:48 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/25 10:55:01 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	executer(char *cmd_passed, char **env, char *message)
 	cmd = ft_split(cmd_passed, ' ');
 	path = access_path(env, cmd);
 	if (execve(path, cmd, env) == -1)
+	{
+		path_freer(cmd);
+		free(path);
 		exit_error(message);
+	}
 }
 
 void	child_command_execution(char *cmd_passed, char **env)

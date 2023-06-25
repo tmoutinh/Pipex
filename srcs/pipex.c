@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/22 18:09:36 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/25 10:51:42 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,22 @@ void	parent_command_execution(int *fd, char **argv, char **env)
 	path = access_path(env, cmd);
 	file = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (file == -1)
-		exit_error("\x1b[31mError opening file\x1b[0m");
-	if (path)
 	{
-		dup2(fd[0], STDIN_FILENO);
-		dup2(file, STDOUT_FILENO);
-		close(fd[1]);
-		if (execve(path, cmd, env) == -1)
-			exit_error("\x1b[31mError: Child not executed\x1b[0m");
+		path_freer(cmd);
+		free(path);
+		close(file);
+		exit_error("\x1b[31mError opening file\x1b[0m");
 	}
-	else
-		exit_error("\x1b[31mNot valid command\x1b[0m");
+	dup2(fd[0], STDIN_FILENO);
+	dup2(file, STDOUT_FILENO);
+	close(fd[1]);
+	if (execve(path, cmd, env) == -1)
+	{
+		path_freer(cmd);
+		free(path);
+		close(file);
+		exit_error("\x1b[31mError: Child not executed\x1b[0m");
+	}
 }
 
 void	child_command_execution(int *fd, char **argv, char **env)
@@ -45,17 +50,22 @@ void	child_command_execution(int *fd, char **argv, char **env)
 	path = access_path(env, cmd);
 	file = open(argv[1], O_RDONLY, 0777);
 	if (file == -1)
-		exit_error("\x1b[31mError opening file\x1b[0m");
-	if (path)
 	{
-		dup2(fd[1], STDOUT_FILENO);
-		dup2(file, STDIN_FILENO);
-		close(fd[0]);
-		if (execve(path, cmd, env) == -1)
-			exit_error("\x1b[31mError: Child not executed\x1b[0m");
+		path_freer(cmd);
+		free(path);
+		close(file);
+		exit_error("\x1b[31mError opening file\x1b[0m");
 	}
-	else
-		exit_error("\x1b[31mNot valid command\x1b[0m");
+	dup2(fd[1], STDOUT_FILENO);
+	dup2(file, STDIN_FILENO);
+	close(fd[0]);
+	if (execve(path, cmd, env) == -1)
+	{
+		path_freer(cmd);
+		free(path);
+		close(file);
+		exit_error("\x1b[31mError: Child not executed\x1b[0m");
+	}
 }
 
 int	main(int argc, char **argv, char **env)

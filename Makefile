@@ -1,4 +1,7 @@
 NAME = pipex
+
+NAME_BONUS = pipex_bonus
+
 SRCS = srcs/pipex.c srcs/pipex_utils.c
 SRCS_BONUS = srcs/pipex_bonus.c srcs/pipex_utils_bonus.c srcs/command_execution_bonus.c
 
@@ -16,7 +19,7 @@ OBJS = $(SRCS:.c=.o)
 
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-.c.o:
+%.o:%.c
 		${CC} ${FLAGS} -c $< -o srcs/$(@F)
 
 $(NAME): $(OBJS)
@@ -34,11 +37,14 @@ clean:
 fclean: clean
 	make -C ${LIBFT_PATH} fclean
 	${RM} ${NAME}
+	$(RM) $(NAME_BONUS)
 
 re: fclean all
 
-bonus: $(OBJS_BONUS)
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJS_BONUS)
 	make -C $(LIBFT_PATH)
-	$(CC) $(FLAGS) $(OBJS_BONUS) $(LIBFT) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS_BONUS) $(LIBFT) -o $(NAME_BONUS)
 
 .PHONY:all clean fclean re bonus
