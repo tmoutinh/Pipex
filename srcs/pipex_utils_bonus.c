@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:06:25 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/22 18:12:34 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:11:28 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	extra(int fd_0, int fd_1, int pid)
 void	exit_error(char *message)
 {
 	perror(message);
-	exit(EXIT_SUCCESS);
+	exit(EXIT_FAILURE);
 }
 
 //This function will get the path

@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/25 10:51:42 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/06/25 20:18:38 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	parent_command_execution(int *fd, char **argv, char **env)
 		path_freer(cmd);
 		free(path);
 		close(file);
-		exit_error("\x1b[31mError: Child not executed\x1b[0m");
+		exit_error("\x1b[31mError: Parent not executed\x1b[0m");
 	}
 }
 
