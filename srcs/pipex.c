@@ -48,7 +48,7 @@ void	child_command_execution(int *fd, char **argv, char **env)
 
 	cmd = ft_split(argv[2], ' ');
 	path = access_path(env, cmd);
-	file = open(argv[1], O_RDONLY, 0777);
+	file = open(argv[1], O_RDONLY);
 	if (file == -1)
 	{
 		path_freer(cmd);
@@ -83,11 +83,7 @@ int	main(int argc, char **argv, char **env)
 		if (pid == 0)
 			child_command_execution(fd, argv, env);
 		else
-		{
-			if (waitpid(pid, NULL, 0) == -1)
-				exit_error("\x1b[31mError: Unable to wait\n\x1b[0m");
 			parent_command_execution(fd, argv, env);
-		}
 	}
 	else
 	{
