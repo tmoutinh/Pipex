@@ -6,14 +6,14 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:09:51 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/25 13:42:46 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/07/01 14:56:04 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
 void	executer(char *cmd_passed, char **env, int file, char *message)
-{	
+{
 	char	*path;
 	char	**cmd;
 
@@ -46,5 +46,5 @@ void	child_command_execution(char *cmd_passed, char **env)
 			fd[1], "\x1b[31mError: Child not executed\x1b[0m");
 	}
 	else
-		extra(fd[0], fd[1], child);
+		extra(fd[0], fd[1]);
 }

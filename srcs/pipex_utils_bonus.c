@@ -6,17 +6,16 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:06:25 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/25 20:11:28 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/07/01 14:55:58 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	extra(int fd_0, int fd_1, int pid)
+void	extra(int fd_0, int fd_1)
 {
 	close(fd_1);
 	dup2(fd_0, STDIN_FILENO);
-	waitpid(pid, NULL, 0);
 }
 
 void	exit_error(char *message)
@@ -45,7 +44,6 @@ void	path_freer(char **paths)
 	int	i;
 
 	i = -1;
-		i = -1;
 	while (paths[++i])
 		free(paths[i]);
 	free(paths);

@@ -6,7 +6,7 @@
 /*   By: tmoutinh <tmoutinh@student.42porto.com     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:31:28 by tmoutinh          #+#    #+#             */
-/*   Updated: 2023/06/25 13:42:28 by tmoutinh         ###   ########.fr       */
+/*   Updated: 2023/07/01 14:55:51 by tmoutinh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	here_doc(int argc, char **argv)
 		}
 	}
 	else
-		extra(fd[0], fd[1], reader);
+		extra(fd[0], fd[1]);
 }
 
 void	initializer(char **argv, int argc, char **env)
